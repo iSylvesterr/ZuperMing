@@ -553,8 +553,8 @@ function ZuperMing:Window(GuiConfig)
     DropShadow.Parent = DropShadowHolder
 
     -- Background dengan gradient biru muda → merah gelap - ZuperMing Style
-    Main.BackgroundColor3 = Color3.fromRGB(25, 30, 40) -- Base gelap
-    Main.BackgroundTransparency = 0.02
+    Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Base white untuk gradient warna
+    Main.BackgroundTransparency = 0
 
     Main.AnchorPoint = Vector2.new(0.5, 0.5)
     Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -564,22 +564,19 @@ function ZuperMing:Window(GuiConfig)
     Main.Name = "Main"
     Main.Parent = DropShadow
 
-    -- Gradient biru muda → merah gelap (dengan transparansi untuk blend)
+    -- Gradient biru muda → merah gelap (SOLID - ga pake transparency!)
     local MainGradient = Instance.new("UIGradient")
     MainGradient.Color = ColorSequence.new({
         ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 120, 200)),   -- Biru muda gelap
         ColorSequenceKeypoint.new(1, Color3.fromRGB(140, 40, 70))     -- Merah gelap
     })
     MainGradient.Rotation = 135 -- Diagonal smooth
-    MainGradient.Transparency = NumberSequence.new({
-        NumberSequenceKeypoint.new(0, 0.3),  -- Agak transparan di awal
-        NumberSequenceKeypoint.new(1, 0.4)   -- Agak transparan di akhir
-    })
+    -- GA PAKE Transparency biar solid!
     MainGradient.Parent = Main
 
     MainStroke.Thickness = 1.2
     MainStroke.Color = Color3.fromRGB(100, 180, 255)  -- Outline biru muda
-    MainStroke.Transparency = 0.5
+    MainStroke.Transparency = 0.3
     MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     MainStroke.Parent = Main
 
@@ -959,8 +956,13 @@ function ZuperMing:Window(GuiConfig)
         Button.MouseButton1Click:Connect(function()
             if DropShadowHolder then
                 DropShadowHolder.Visible = not DropShadowHolder.Visible
+                -- Pas UI muncul, icon hilang. Pas UI hilang, icon muncul
+                ScreenGui.Enabled = not DropShadowHolder.Visible
             end
         end)
+
+        -- Mulai dengan icon visible karena UI mulai visible
+        ScreenGui.Enabled = not DropShadowHolder.Visible
 
         local dragging = false
         local dragStart, startPos
@@ -1200,13 +1202,22 @@ function ZuperMing:Window(GuiConfig)
             LayersPageLayout:JumpToIndex(0)
             NameTab.Text = TabConfig.Name
             local ChooseFrame = Instance.new("Frame");
-            ChooseFrame.BackgroundColor3 = GuiConfig.Color
+            ChooseFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Base untuk gradient
             ChooseFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
             ChooseFrame.BorderSizePixel = 0
             ChooseFrame.Position = UDim2.new(0, 2, 0, 9)
             ChooseFrame.Size = UDim2.new(0, 1, 0, 12)
             ChooseFrame.Name = "ChooseFrame"
             ChooseFrame.Parent = Tab
+            
+            -- Gradient biru muda → merah gelap kayak logo
+            local TabGradient = Instance.new("UIGradient")
+            TabGradient.Color = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 180, 255)),  -- Biru muda
+                ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 50, 80))     -- Merah gelap
+            })
+            TabGradient.Rotation = 90 -- Vertical gradient
+            TabGradient.Parent = ChooseFrame
 
             UIStroke2.Color = GuiConfig.Color
             UIStroke2.Thickness = 1.600000023841858
@@ -1275,7 +1286,7 @@ function ZuperMing:Window(GuiConfig)
         local CountSection = 0
         function Sections:AddSection(Title, AlwaysOpen)
             local Title = Title or "Title"
-            AlwaysOpen = (AlwaysOpen == nil) and true or AlwaysOpen -- Default true jika nil
+            -- Default open (true) tapi masih bisa toggle kecuali AlwaysOpen explicitly true
             local Section = Instance.new("Frame");
             local SectionDecideFrame = Instance.new("Frame");
             local UICorner1 = Instance.new("UICorner");
@@ -1461,10 +1472,10 @@ function ZuperMing:Window(GuiConfig)
                 OpenSection = true
                 UpdateSizeSection()
             elseif AlwaysOpen == false then
-                OpenSection = true
-                UpdateSizeSection()
+                OpenSection = false -- Kalo explicitly false, mulai closed
             else
-                OpenSection = false
+                OpenSection = true -- Default: mulai open tapi bisa toggle
+                UpdateSizeSection()
             end
 
             if AlwaysOpen ~= true then
