@@ -552,9 +552,13 @@ function ZuperMing:Window(GuiConfig)
     DropShadow.Name = "DropShadow"
     DropShadow.Parent = DropShadowHolder
 
-    -- Background dengan gradient biru muda → merah gelap - ZuperMing Style
-    Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Base white untuk gradient warna
-    Main.BackgroundTransparency = 0
+    -- Background pakai IMAGE logo ZuperMing
+    Main:Destroy()
+    Main = Instance.new("ImageLabel")
+    Main.Image = "rbxassetid://137808493980662" -- Logo ZuperMing
+    Main.ScaleType = Enum.ScaleType.Crop
+    Main.BackgroundTransparency = 1
+    Main.ImageTransparency = 0.15 -- Sedikit transparan agar UI tetap bersih
 
     Main.AnchorPoint = Vector2.new(0.5, 0.5)
     Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -564,19 +568,9 @@ function ZuperMing:Window(GuiConfig)
     Main.Name = "Main"
     Main.Parent = DropShadow
 
-    -- Gradient biru muda → merah gelap (SOLID - ga pake transparency!)
-    local MainGradient = Instance.new("UIGradient")
-    MainGradient.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 120, 200)),   -- Biru muda gelap
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(140, 40, 70))     -- Merah gelap
-    })
-    MainGradient.Rotation = 135 -- Diagonal smooth
-    -- GA PAKE Transparency biar solid!
-    MainGradient.Parent = Main
-
-    MainStroke.Thickness = 1.2
-    MainStroke.Color = Color3.fromRGB(100, 180, 255)  -- Outline biru muda
-    MainStroke.Transparency = 0.3
+    MainStroke.Thickness = 1.5
+    MainStroke.Color = Color3.fromRGB(140, 40, 70)  -- Outline merah gelap (biar keliatan!)
+    MainStroke.Transparency = 0.4
     MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     MainStroke.Parent = Main
 
@@ -590,14 +584,37 @@ function ZuperMing:Window(GuiConfig)
     Top.Name = "Top"
     Top.Parent = Main
 
-    TitleIcon.Name = "TitleIcon"
-    TitleIcon.Parent = Top
-    TitleIcon.BackgroundTransparency = 1
-    TitleIcon.BorderSizePixel = 0
-    TitleIcon.AnchorPoint = Vector2.new(0, 0.5)
-    TitleIcon.Position = UDim2.new(0, 10, 0.5, 0) 
-    TitleIcon.Size = UDim2.new(0, 20, 0, 20)
-    TitleIcon.Image = GuiConfig.Icon
+    TitleIcon:Destroy() -- Hapus icon lama
+    
+    -- Buat 3 titik warna kayak macOS (🔴🟡🟢)
+    local DotsFrame = Instance.new("Frame")
+    DotsFrame.Name = "DotsFrame"
+    DotsFrame.Parent = Top
+    DotsFrame.BackgroundTransparency = 1
+    DotsFrame.Position = UDim2.new(0, 10, 0.5, 0)
+    DotsFrame.AnchorPoint = Vector2.new(0, 0.5)
+    DotsFrame.Size = UDim2.new(0, 50, 0, 12)
+    
+    local dotColors = {
+        Color3.fromRGB(255, 95, 87),   -- Merah
+        Color3.fromRGB(255, 189, 68),  -- Kuning
+        Color3.fromRGB(40, 201, 64)    -- Ijo
+    }
+    
+    for i = 1, 3 do
+        local Dot = Instance.new("Frame")
+        Dot.Name = "Dot" .. i
+        Dot.Parent = DotsFrame
+        Dot.BackgroundColor3 = dotColors[i]
+        Dot.BorderSizePixel = 0
+        Dot.Position = UDim2.new(0, (i-1) * 16, 0.5, 0)
+        Dot.AnchorPoint = Vector2.new(0, 0.5)
+        Dot.Size = UDim2.new(0, 12, 0, 12)
+        
+        local Corner = Instance.new("UICorner")
+        Corner.CornerRadius = UDim.new(1, 0) -- Bulat sempurna
+        Corner.Parent = Dot
+    end
 
     -- ThemeImage dihapus untuk ZuperMing - Background solid only
     -- ThemeImage.Name = "ThemeImage"
@@ -1159,6 +1176,23 @@ function ZuperMing:Window(GuiConfig)
         Tab.Size = UDim2.new(1, 0, 0, 30)
         Tab.Name = "Tab"
         Tab.Parent = ScrollTab
+        
+        -- Border gradient untuk Tab
+        local TabBorderStroke = Instance.new("UIStroke")
+        TabBorderStroke.Name = "TabBorder"
+        TabBorderStroke.Thickness = 1.2
+        TabBorderStroke.Transparency = 0.7
+        TabBorderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+        TabBorderStroke.Parent = Tab
+        
+        -- Gradient biru muda → merah gelap untuk border
+        local TabBorderGradient = Instance.new("UIGradient")
+        TabBorderGradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 180, 255)),  -- Biru muda
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 50, 80))     -- Merah gelap
+        })
+        TabBorderGradient.Rotation = 0 -- Horizontal gradient
+        TabBorderGradient.Parent = TabBorderStroke
 
         UICorner3.CornerRadius = UDim.new(0, 4)
         UICorner3.Parent = Tab
