@@ -539,8 +539,8 @@ function ZuperMing:Window(GuiConfig)
     DropShadowHolder.Position = UDim2.new(0, (ZuperMingb.AbsoluteSize.X // 2 - DropShadowHolder.Size.X.Offset // 2), 0,
         (ZuperMingb.AbsoluteSize.Y // 2 - DropShadowHolder.Size.Y.Offset // 2))
     DropShadow.Image = "rbxassetid://6015897843"
-    DropShadow.ImageColor3 = Color3.fromRGB(15, 15, 15)
-    DropShadow.ImageTransparency = 1
+    DropShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)  -- FIXED: Pure black shadow
+    DropShadow.ImageTransparency = 0.4  -- FIXED: Subtle shadow (was 1)
     DropShadow.ScaleType = Enum.ScaleType.Slice
     DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
     DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -579,13 +579,14 @@ function ZuperMing:Window(GuiConfig)
     BackgroundImage.ZIndex = 0
 
     MainStroke.Thickness = 3
-    MainStroke.Color = Color3.fromRGB(180, 10, 30)  -- IMPROVED: Merah pekat bukan pink!
+    MainStroke.Color = Color3.fromRGB(220, 50, 80)  -- FIXED: Modern bright red!
     MainStroke.Transparency = 0
     MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     MainStroke.Parent = Main
     
     -- REMOVED: DimOverlay dihapus agar background image terlihat
 
+    UICorner.CornerRadius = UDim.new(0, 12)  -- FIXED: Modern rounded corners
     UICorner.Parent = Main
 
     Top.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -598,17 +599,17 @@ function ZuperMing:Window(GuiConfig)
 
     TitleIcon:Destroy() -- Hapus icon lama
     
-    -- FIXED: Replace Mac OS dots with logo
+    -- FIXED: Logo icon with proper vertical alignment
     local LogoIcon = Instance.new("ImageLabel")
     LogoIcon.Name = "LogoIcon"
     LogoIcon.Parent = Top
     LogoIcon.BackgroundTransparency = 1
-    LogoIcon.Position = UDim2.new(0, 10, 0.5, 0)
+    LogoIcon.Position = UDim2.new(0, 10, 0.5, 2)  -- FIXED: Turun 2px untuk sinkron
     LogoIcon.AnchorPoint = Vector2.new(0, 0.5)
-    LogoIcon.Size = UDim2.new(0, 32, 0, 32)
-    LogoIcon.Image = "rbxassetid://104396282819940"  -- FIXED: New image
+    LogoIcon.Size = UDim2.new(0, 30, 0, 30)  -- FIXED: Slightly smaller untuk lebih modern
+    LogoIcon.Image = "rbxassetid://104396282819940"
     LogoIcon.ScaleType = Enum.ScaleType.Fit
-    LogoIcon.ImageTransparency = 0  -- IMPROVED: Logo lebih terang, warna asli
+    LogoIcon.ImageTransparency = 0  -- Fully visible
     LogoIcon.ZIndex = 10
 
     -- ThemeImage dihapus untuk ZuperMing - Background solid only
@@ -725,7 +726,7 @@ function ZuperMing:Window(GuiConfig)
     local TabSeparator = Instance.new("Frame")
     TabSeparator.Name = "TabSeparator"
     TabSeparator.Parent = Main
-    TabSeparator.BackgroundColor3 = Color3.fromRGB(180, 10, 30)  -- Merah pekat seperti outline
+    TabSeparator.BackgroundColor3 = Color3.fromRGB(220, 50, 80)  -- FIXED: Modern bright red!
     TabSeparator.BorderSizePixel = 0
     TabSeparator.Position = UDim2.new(0, GuiConfig["Tab Width"] + 16, 0, 38)  -- IMPROVED: +16 untuk rapat ke kanan (was +9)
     TabSeparator.Size = UDim2.new(0, 2, 1, -38)  -- IMPROVED: Full height dari Top ke bottom
@@ -734,7 +735,7 @@ function ZuperMing:Window(GuiConfig)
 
     -- IMPROVED: DecideFrame sebagai garis horizontal MERAH di bawah title
     DecideFrame.AnchorPoint = Vector2.new(0.5, 0)
-    DecideFrame.BackgroundColor3 = Color3.fromRGB(180, 10, 30)  -- IMPROVED: Merah pekat!
+    DecideFrame.BackgroundColor3 = Color3.fromRGB(220, 50, 80)  -- FIXED: Modern bright red!
     DecideFrame.BackgroundTransparency = 0  -- IMPROVED: Fully visible
     DecideFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
     DecideFrame.BorderSizePixel = 0
@@ -1241,37 +1242,37 @@ function ZuperMing:Window(GuiConfig)
         local UIStroke2 = Instance.new("UIStroke");
         local UICorner4 = Instance.new("UICorner");
 
-        Tab.BackgroundColor3 = Color3.fromRGB(15, 15, 20)  -- IMPROVED: Very dark background
+        Tab.BackgroundColor3 = Color3.fromRGB(18, 18, 22)  -- FIXED: Modern dark background
         if CountTab == 0 then
-            Tab.BackgroundTransparency = 0.9  -- IMPROVED: Semi-transparent untuk selected tab
+            Tab.BackgroundTransparency = 0.85  -- FIXED: Selected tab semi-visible
         else
-            Tab.BackgroundTransparency = 0.999  -- IMPROVED: Hampir transparan penuh untuk non-selected
+            Tab.BackgroundTransparency = 0.98  -- FIXED: Non-selected almost invisible
         end
         Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        Tab.BorderSizePixel = 0  -- IMPORTANT: No border!
+        Tab.BorderSizePixel = 0  -- CRITICAL: NO BORDER!
         Tab.LayoutOrder = CountTab
         Tab.Size = UDim2.new(1, 0, 0, 30)
         Tab.Name = "Tab"
         Tab.Parent = ScrollTab
         
-        -- IMPROVED: Border gradient untuk Tab - Gradasi merah dan biru
+        -- FIXED: Modern gradient border - NO BLACK OUTLINE!
         local TabBorderStroke = Instance.new("UIStroke")
         TabBorderStroke.Name = "TabBorder"
-        TabBorderStroke.Thickness = 2  -- IMPROVED: Lebih tebal lagi
-        TabBorderStroke.Transparency = 0  -- IMPROVED: Fully visible!
+        TabBorderStroke.Thickness = 1.5  -- FIXED: Thinner, more modern
+        TabBorderStroke.Transparency = 0.2  -- FIXED: Slightly transparent for softer look
         TabBorderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
         TabBorderStroke.Parent = Tab
         
-        -- IMPROVED: Gradient merah pekat → biru terang untuk border
+        -- FIXED: Modern gradient - Merah modern → Biru cerah (NO DARK COLORS!)
         local TabBorderGradient = Instance.new("UIGradient")
         TabBorderGradient.Color = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(180, 10, 30)),   -- Merah pekat
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 180, 255))  -- Biru terang
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(220, 50, 80)),    -- FIXED: Bright modern red
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(80, 160, 255))   -- FIXED: Bright modern blue
         })
-        TabBorderGradient.Rotation = 90  -- IMPROVED: Vertical gradient (atas ke bawah)
+        TabBorderGradient.Rotation = 90  -- Vertical gradient
         TabBorderGradient.Parent = TabBorderStroke
 
-        UICorner3.CornerRadius = UDim.new(0, 4)
+        UICorner3.CornerRadius = UDim.new(0, 6)  -- FIXED: Slightly larger radius for modern look
         UICorner3.Parent = Tab
 
         TabButton.Font = Enum.Font.GothamBold
