@@ -721,28 +721,18 @@ function ZuperMing:Window(GuiConfig)
     UICorner2.CornerRadius = UDim.new(0, 2)
     UICorner2.Parent = LayersTab
     
-    -- IMPROVED: Garis pemisah vertikal antara tab dan section
+    -- IMPROVED: Garis pemisah vertikal antara tab dan section - RAPAT!
     local TabSeparator = Instance.new("Frame")
     TabSeparator.Name = "TabSeparator"
     TabSeparator.Parent = Main
     TabSeparator.BackgroundColor3 = Color3.fromRGB(180, 10, 30)  -- Merah pekat seperti outline
     TabSeparator.BorderSizePixel = 0
-    TabSeparator.Position = UDim2.new(0, GuiConfig["Tab Width"] + 9, 0, 50)  -- Di sebelah kanan tab
-    TabSeparator.Size = UDim2.new(0, 2, 1, -59)  -- Line vertikal 2px, full height
+    TabSeparator.Position = UDim2.new(0, GuiConfig["Tab Width"] + 9, 0, 38)  -- IMPROVED: Mulai dari bawah Top bar (38px)
+    TabSeparator.Size = UDim2.new(0, 2, 1, -38)  -- IMPROVED: Full height dari Top ke bottom
     TabSeparator.ZIndex = 5
-    local SeparatorCorner = Instance.new("UICorner")
-    SeparatorCorner.CornerRadius = UDim.new(0, 1)
-    SeparatorCorner.Parent = TabSeparator
+    -- REMOVED: Corner dihapus agar garis lurus sempurna
 
-    DecideFrame.AnchorPoint = Vector2.new(0.5, 0)
-    DecideFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    DecideFrame.BackgroundTransparency = 0.85
-    DecideFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    DecideFrame.BorderSizePixel = 0
-    DecideFrame.Position = UDim2.new(0.5, 0, 0, 38)
-    DecideFrame.Size = UDim2.new(1, 0, 0, 1)
-    DecideFrame.Name = "DecideFrame"
-    DecideFrame.Parent = Main
+    -- REMOVED: DecideFrame dihapus karena outline hitam jelek
 
     Layers.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
     Layers.BackgroundTransparency = 0.7  -- IMPROVED: Lebih transparan agar image terlihat (was 0.15)
