@@ -515,7 +515,7 @@ function ZuperMing:Window(GuiConfig)
     local LayersFolder = Instance.new("Folder");
     local LayersPageLayout = Instance.new("UIPageLayout");
     local MainStroke = Instance.new("UIStroke");
-    local ThemeImage = Instance.new("ImageLabel");
+    -- local ThemeImage = Instance.new("ImageLabel"); -- Dihapus untuk ZuperMing
     local UICornerTheme = Instance.new("UICorner");
 
     ZuperMingb.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -589,32 +589,24 @@ function ZuperMing:Window(GuiConfig)
     TitleIcon.Size = UDim2.new(0, 20, 0, 20)
     TitleIcon.Image = GuiConfig.Icon
 
-    ThemeImage.Name = "ThemeImage"
-    ThemeImage.Parent = Main
-    ThemeImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    ThemeImage.BackgroundTransparency = 1
-    
-    -- Mengatur posisi ke kanan dan ukuran agar tidak terlalu raksasa
-    ThemeImage.AnchorPoint = Vector2.new(1, 0.5)
-    ThemeImage.Position = UDim2.new(1, 0, 0.5, 0)
-    ThemeImage.Size = UDim2.new(0.7, 0, 1, 0) -- Hanya mengambil 70% lebar jendela
-    
-    ThemeImage.ZIndex = 0
-    ThemeImage.Image = "rbxassetid://78769566766000"
-    
-    -- transparansi lebih halus agar UI tetap bersih
-    ThemeImage.ImageTransparency = 0.6 
-    
-    -- Menggunakan ScaleType Stretch atau Fit agar gambar menyesuaikan bingkai
-    ThemeImage.ScaleType = Enum.ScaleType.Crop
-    
-    -- Tambahkan UIGradient agar gambar menyatu dengan background (Fade effect)
-    local Gradient = Instance.new("UIGradient")
-    Gradient.Transparency = NumberSequence.new({
-        NumberSequenceKeypoint.new(0, 1), -- Transparan di kiri
-        NumberSequenceKeypoint.new(1, 0)  -- Muncul di kanan
-    })
-    Gradient.Parent = ThemeImage
+    -- ThemeImage dihapus untuk ZuperMing - Background solid only
+    -- ThemeImage.Name = "ThemeImage"
+    -- ThemeImage.Parent = Main
+    -- ThemeImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    -- ThemeImage.BackgroundTransparency = 1
+    -- ThemeImage.AnchorPoint = Vector2.new(1, 0.5)
+    -- ThemeImage.Position = UDim2.new(1, 0, 0.5, 0)
+    -- ThemeImage.Size = UDim2.new(0.7, 0, 1, 0)
+    -- ThemeImage.ZIndex = 0
+    -- ThemeImage.Image = "rbxassetid://78769566766000"
+    -- ThemeImage.ImageTransparency = 0.6 
+    -- ThemeImage.ScaleType = Enum.ScaleType.Crop
+    -- local Gradient = Instance.new("UIGradient")
+    -- Gradient.Transparency = NumberSequence.new({
+    --     NumberSequenceKeypoint.new(0, 1),
+    --     NumberSequenceKeypoint.new(1, 0)
+    -- })
+    -- Gradient.Parent = ThemeImage
 
     TextLabel.Font = Enum.Font.GothamBold
     TextLabel.Text = GuiConfig.Title
@@ -938,7 +930,7 @@ function ZuperMing:Window(GuiConfig)
         MainButton.Size = UDim2.new(0, 40, 0, 40)
         MainButton.Position = UDim2.new(0, 20, 0, 100)
         MainButton.BackgroundTransparency = 1
-        MainButton.Image = "rbxassetid://" .. GuiConfig.Image
+        MainButton.Image = "rbxassetid://" .. (GuiConfig.Image or "80659354137631")
         MainButton.ScaleType = Enum.ScaleType.Fit
 
         local UICorner = Instance.new("UICorner")
