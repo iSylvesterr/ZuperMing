@@ -484,7 +484,7 @@ function ZuperMing:Window(GuiConfig)
     GuiConfig.Color        = GuiConfig.Color or Color3.fromRGB(100, 180, 255) -- Biru muda untuk ZuperMing
     GuiConfig["Tab Width"] = GuiConfig["Tab Width"] or 120
     GuiConfig.Version      = GuiConfig.Version or 1
-    GuiConfig.Icon         = GuiConfig.Icon or "rbxassetid://84078385121142"  -- FIXED: New logo
+    GuiConfig.Icon         = GuiConfig.Icon or "rbxassetid://104396282819940"  -- FIXED: New image
 
     CURRENT_VERSION        = GuiConfig.Version
     -- LoadConfigFromFile()
@@ -555,10 +555,11 @@ function ZuperMing:Window(GuiConfig)
     -- Background pakai IMAGE logo ZuperMing
     Main:Destroy()
     Main = Instance.new("ImageLabel")
-    Main.Image = "rbxassetid://84078385121142" -- FIXED: New logo
+    Main.Image = "rbxassetid://104396282819940" -- FIXED: New image
     Main.ScaleType = Enum.ScaleType.Fit  -- FIXED: Fit instead of Crop (biar gak zoom banget)
-    Main.BackgroundTransparency = 1
-    Main.ImageTransparency = 0.65 -- FIXED: Lebih gelap biar fitur keliatan (was 0.15)
+    Main.BackgroundTransparency = 0  -- FIXED: Window solid, not transparent
+    Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)  -- FIXED: Dark background
+    Main.ImageTransparency = 0.7 -- FIXED: Image transparent tapi window solid
 
     Main.AnchorPoint = Vector2.new(0.5, 0.5)
     Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -604,7 +605,7 @@ function ZuperMing:Window(GuiConfig)
     LogoIcon.Position = UDim2.new(0, 10, 0.5, 0)
     LogoIcon.AnchorPoint = Vector2.new(0, 0.5)
     LogoIcon.Size = UDim2.new(0, 24, 0, 24)
-    LogoIcon.Image = "rbxassetid://84078385121142"  -- FIXED: New logo
+    LogoIcon.Image = "rbxassetid://104396282819940"  -- FIXED: New image
     LogoIcon.ScaleType = Enum.ScaleType.Fit
     LogoIcon.ImageColor3 = GuiConfig.Color
     LogoIcon.ZIndex = 10
@@ -818,11 +819,11 @@ function ZuperMing:Window(GuiConfig)
     local MinimizeIcon = Instance.new("ImageButton")
     MinimizeIcon.Name = "MinimizeIcon"
     MinimizeIcon.Parent = ZuperMingb
-    MinimizeIcon.AnchorPoint = Vector2.new(0, 1)
+    MinimizeIcon.AnchorPoint = Vector2.new(0.5, 0)  -- FIXED: Center anchor
     MinimizeIcon.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
     MinimizeIcon.BorderSizePixel = 0
-    MinimizeIcon.Position = UDim2.new(0, 20, 1, -80)
-    MinimizeIcon.Size = UDim2.new(0, 0, 0, 0)
+    MinimizeIcon.Position = UDim2.new(0.5, 0, 0, 20)  -- FIXED: Top center position
+    MinimizeIcon.Size = UDim2.new(0, 60, 0, 60)  -- FIXED: Fixed size (no animation)
     MinimizeIcon.Image = GuiConfig.Icon
     MinimizeIcon.ImageTransparency = 0
     MinimizeIcon.ScaleType = Enum.ScaleType.Fit
@@ -843,42 +844,15 @@ function ZuperMing:Window(GuiConfig)
         CircleClick(Min, Mouse.X, Mouse.Y)
         DropShadowHolder.Visible = false
         
-        -- Show minimize icon with animation
+        -- FIXED: Show icon instantly (no animation)
         MinimizeIcon.Visible = true
-        TweenService:Create(MinimizeIcon, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-            Size = UDim2.new(0, 60, 0, 60)
-        }):Play()
     end)
     
     -- Click minimize icon to restore window
     MinimizeIcon.Activated:Connect(function()
-        -- Hide minimize icon
-        TweenService:Create(MinimizeIcon, TweenInfo.new(0.2, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
-            Size = UDim2.new(0, 0, 0, 0)
-        }):Play()
-        
-        wait(0.2)
+        -- FIXED: Hide instantly (no animation)
         MinimizeIcon.Visible = false
         DropShadowHolder.Visible = true
-    end)
-    
-    -- Hover effect for minimize icon
-    MinimizeIcon.MouseEnter:Connect(function()
-        TweenService:Create(MinimizeIcon, TweenInfo.new(0.2), {
-            Size = UDim2.new(0, 70, 0, 70)
-        }):Play()
-        TweenService:Create(MinimizeIconStroke, TweenInfo.new(0.2), {
-            Thickness = 3
-        }):Play()
-    end)
-    
-    MinimizeIcon.MouseLeave:Connect(function()
-        TweenService:Create(MinimizeIcon, TweenInfo.new(0.2), {
-            Size = UDim2.new(0, 60, 0, 60)
-        }):Play()
-        TweenService:Create(MinimizeIconStroke, TweenInfo.new(0.2), {
-            Thickness = 2
-        }):Play()
     end)
     
     -- FIXED: Make minimize icon draggable
