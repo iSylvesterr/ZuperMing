@@ -565,16 +565,17 @@ function ZuperMing:Window(GuiConfig)
     Main.Name = "Main"
     Main.Parent = DropShadow
     
-    -- IMPROVED: Background image as child, digeser ke kanan
+    -- IMPROVED: Background image as child, positioned properly
     local BackgroundImage = Instance.new("ImageLabel")
     BackgroundImage.Name = "BackgroundImage"
     BackgroundImage.Parent = Main
     BackgroundImage.Image = "rbxassetid://104396282819940"
     BackgroundImage.ScaleType = Enum.ScaleType.Fit
     BackgroundImage.BackgroundTransparency = 1
-    BackgroundImage.ImageTransparency = 0.7
-    BackgroundImage.Position = UDim2.new(0, 100, 0, 0)  -- Geser 100px ke kanan
-    BackgroundImage.Size = UDim2.new(1, -100, 1, 0)  -- Ambil sisa width
+    BackgroundImage.ImageTransparency = 0.65  -- IMPROVED: Sedikit lebih terlihat (was 0.7)
+    BackgroundImage.AnchorPoint = Vector2.new(0.5, 0.5)  -- Center anchor
+    BackgroundImage.Position = UDim2.new(0.6, 0, 0.5, 0)  -- IMPROVED: 60% ke kanan (sedikit offset)
+    BackgroundImage.Size = UDim2.new(0.8, 0, 0.8, 0)  -- IMPROVED: 80% size agar proporsional
     BackgroundImage.ZIndex = 0
 
     MainStroke.Thickness = 3
@@ -583,15 +584,7 @@ function ZuperMing:Window(GuiConfig)
     MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     MainStroke.Parent = Main
     
-    -- FIXED: Add dark overlay to make features more visible
-    local DimOverlay = Instance.new("Frame")
-    DimOverlay.Name = "DimOverlay"
-    DimOverlay.Parent = Main
-    DimOverlay.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
-    DimOverlay.BackgroundTransparency = 0.4 -- 60% dark overlay
-    DimOverlay.BorderSizePixel = 0
-    DimOverlay.Size = UDim2.new(1, 0, 1, 0)
-    DimOverlay.ZIndex = 1
+    -- REMOVED: DimOverlay dihapus agar background image terlihat
 
     UICorner.Parent = Main
 
@@ -751,8 +744,8 @@ function ZuperMing:Window(GuiConfig)
     DecideFrame.Name = "DecideFrame"
     DecideFrame.Parent = Main
 
-    Layers.BackgroundColor3 = Color3.fromRGB(10, 10, 15)  -- IMPROVED: Dark background
-    Layers.BackgroundTransparency = 0.15  -- IMPROVED: Semi-transparent agar konten terlihat jelas
+    Layers.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+    Layers.BackgroundTransparency = 0.7  -- IMPROVED: Lebih transparan agar image terlihat (was 0.15)
     Layers.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Layers.BorderSizePixel = 0
     Layers.Position = UDim2.new(0, GuiConfig["Tab Width"] + 18, 0, 50)
@@ -1265,8 +1258,8 @@ function ZuperMing:Window(GuiConfig)
         -- IMPROVED: Border gradient untuk Tab - Gradasi merah dan biru
         local TabBorderStroke = Instance.new("UIStroke")
         TabBorderStroke.Name = "TabBorder"
-        TabBorderStroke.Thickness = 1.5  -- IMPROVED: Lebih tebal
-        TabBorderStroke.Transparency = 0.3  -- IMPROVED: Lebih terlihat (was 0.7)
+        TabBorderStroke.Thickness = 2  -- IMPROVED: Lebih tebal lagi
+        TabBorderStroke.Transparency = 0  -- IMPROVED: Fully visible!
         TabBorderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
         TabBorderStroke.Parent = Tab
         
