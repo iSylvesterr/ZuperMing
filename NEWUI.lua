@@ -709,10 +709,10 @@ function ZuperMing:Window(GuiConfig)
     ImageLabel2.Size = UDim2.new(1, -9, 1, -9)
     ImageLabel2.Parent = Min
 
-    LayersTab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    LayersTab.BackgroundTransparency = 0.9990000128746033
+    LayersTab.BackgroundColor3 = Color3.fromRGB(10, 10, 15)  -- IMPROVED: Dark background
+    LayersTab.BackgroundTransparency = 0.95  -- IMPROVED: Sangat transparan
     LayersTab.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    LayersTab.BorderSizePixel = 0
+    LayersTab.BorderSizePixel = 0  -- No border
     LayersTab.Position = UDim2.new(0, 9, 0, 50)
     LayersTab.Size = UDim2.new(0, GuiConfig["Tab Width"], 1, -59)
     LayersTab.Name = "LayersTab"
@@ -721,13 +721,13 @@ function ZuperMing:Window(GuiConfig)
     UICorner2.CornerRadius = UDim.new(0, 2)
     UICorner2.Parent = LayersTab
     
-    -- IMPROVED: Garis pemisah vertikal antara tab dan section - RAPAT!
+    -- IMPROVED: Garis pemisah vertikal antara tab dan section - RAPAT KE KANAN!
     local TabSeparator = Instance.new("Frame")
     TabSeparator.Name = "TabSeparator"
     TabSeparator.Parent = Main
     TabSeparator.BackgroundColor3 = Color3.fromRGB(180, 10, 30)  -- Merah pekat seperti outline
     TabSeparator.BorderSizePixel = 0
-    TabSeparator.Position = UDim2.new(0, GuiConfig["Tab Width"] + 9, 0, 38)  -- IMPROVED: Mulai dari bawah Top bar (38px)
+    TabSeparator.Position = UDim2.new(0, GuiConfig["Tab Width"] + 16, 0, 38)  -- IMPROVED: +16 untuk rapat ke kanan (was +9)
     TabSeparator.Size = UDim2.new(0, 2, 1, -38)  -- IMPROVED: Full height dari Top ke bottom
     TabSeparator.ZIndex = 5
     -- REMOVED: Corner dihapus agar garis lurus sempurna
@@ -1241,11 +1241,11 @@ function ZuperMing:Window(GuiConfig)
         local UIStroke2 = Instance.new("UIStroke");
         local UICorner4 = Instance.new("UICorner");
 
-        Tab.BackgroundColor3 = Color3.fromRGB(20, 20, 25)  -- IMPROVED: Dark background
+        Tab.BackgroundColor3 = Color3.fromRGB(15, 15, 20)  -- IMPROVED: Very dark background
         if CountTab == 0 then
-            Tab.BackgroundTransparency = 0.85  -- IMPROVED: Semi-transparent untuk selected tab
+            Tab.BackgroundTransparency = 0.9  -- IMPROVED: Semi-transparent untuk selected tab
         else
-            Tab.BackgroundTransparency = 0.95  -- IMPROVED: Lebih transparan untuk non-selected
+            Tab.BackgroundTransparency = 0.999  -- IMPROVED: Hampir transparan penuh untuk non-selected
         end
         Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
         Tab.BorderSizePixel = 0  -- IMPORTANT: No border!
