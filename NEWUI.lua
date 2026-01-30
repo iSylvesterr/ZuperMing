@@ -1,9 +1,3 @@
---[[ 
-    ZUPERMING UI LIBRARY 
-    Theme: Blue-Red Gradient (Cyber Style)
-    Rebuilt from: Meng Hub
-]]
-
 local HttpService = game:GetService("HttpService")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
@@ -660,5 +654,6 @@ function ZuperMing:Window(GuiConfig)
     end
     return Tabs
 end
+
 
 return ZuperMing
