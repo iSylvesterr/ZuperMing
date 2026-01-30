@@ -557,7 +557,7 @@ function ZuperMing:Window(GuiConfig)
     Main = Instance.new("ImageLabel")
     Main.Image = "rbxassetid://104396282819940" -- FIXED: New image
     Main.ScaleType = Enum.ScaleType.Fit  -- FIXED: Fit instead of Crop (biar gak zoom banget)
-    Main.BackgroundTransparency = 0  -- FIXED: Window solid, not transparent
+    Main.BackgroundTransparency = 0.1  -- IMPROVED: Window sedikit transparent (0.1 = 10% transparent)
     Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)  -- FIXED: Dark background
     Main.ImageTransparency = 0.7 -- FIXED: Image transparent tapi window solid
 
@@ -604,10 +604,10 @@ function ZuperMing:Window(GuiConfig)
     LogoIcon.BackgroundTransparency = 1
     LogoIcon.Position = UDim2.new(0, 10, 0.5, 0)
     LogoIcon.AnchorPoint = Vector2.new(0, 0.5)
-    LogoIcon.Size = UDim2.new(0, 24, 0, 24)
+    LogoIcon.Size = UDim2.new(0, 32, 0, 32)
     LogoIcon.Image = "rbxassetid://104396282819940"  -- FIXED: New image
     LogoIcon.ScaleType = Enum.ScaleType.Fit
-    LogoIcon.ImageColor3 = GuiConfig.Color
+    LogoIcon.ImageTransparency = 0  -- IMPROVED: Logo lebih terang, warna asli
     LogoIcon.ZIndex = 10
 
     -- ThemeImage dihapus untuk ZuperMing - Background solid only
@@ -632,32 +632,31 @@ function ZuperMing:Window(GuiConfig)
     TextLabel.Font = Enum.Font.GothamBold
     TextLabel.Text = GuiConfig.Title
     TextLabel.TextColor3 = GuiConfig.Color
-    TextLabel.TextSize = 14
-    TextLabel.TextXAlignment = Enum.TextXAlignment.Center  -- FIXED: Center alignment
+    TextLabel.TextSize = 15  -- IMPROVED: Slightly bigger
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Center
     TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     TextLabel.BackgroundTransparency = 0.999
     TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
     TextLabel.BorderSizePixel = 0
-    TextLabel.Size = UDim2.new(0, 300, 0, 20)  -- FIXED: Fixed width for center
-    TextLabel.Position = UDim2.new(0.5, -150, 0, 3)  -- FIXED: Centered at top
-    TextLabel.AnchorPoint = Vector2.new(0.5, 0)  -- FIXED: Center anchor
+    TextLabel.Size = UDim2.new(0.5, 0, 0, 18)  -- IMPROVED: 50% width, auto center
+    TextLabel.Position = UDim2.new(0.5, 0, 0, 2)  -- IMPROVED: Perfect center
+    TextLabel.AnchorPoint = Vector2.new(0.5, 0)
     TextLabel.Parent = Top
 
     UICorner1.Parent = Top
 
     TextLabel1.Font = Enum.Font.GothamBold
     TextLabel1.Text = GuiConfig.Footer
-    TextLabel1.TextColor3 = GuiConfig.Color
-    TextLabel1.TextSize = 11  -- FIXED: Smaller subtitle
-    TextLabel1.TextXAlignment = Enum.TextXAlignment.Center  -- FIXED: Center alignment
+    TextLabel1.TextColor3 = Color3.fromRGB(180, 180, 190)  -- IMPROVED: Subtle subtitle color
+    TextLabel1.TextSize = 11
+    TextLabel1.TextXAlignment = Enum.TextXAlignment.Center
     TextLabel1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     TextLabel1.BackgroundTransparency = 0.9990000128746033
     TextLabel1.BorderColor3 = Color3.fromRGB(0, 0, 0)
     TextLabel1.BorderSizePixel = 0
-    TextLabel1.Size = UDim2.new(0, 300, 0, 15)  -- FIXED: Fixed width for center
-    TextLabel1.Position = UDim2.new(0.5, -150, 0, 20)  -- FIXED: Below title
-    TextLabel1.AnchorPoint = Vector2.new(0.5, 0)  -- FIXED: Center anchor
-    TextLabel1.TextColor3 = Color3.fromRGB(180, 180, 190)  -- FIXED: Subtle subtitle color
+    TextLabel1.Size = UDim2.new(0.5, 0, 0, 14)  -- IMPROVED: 50% width, auto center
+    TextLabel1.Position = UDim2.new(0.5, 0, 0, 21)  -- IMPROVED: Below title, centered
+    TextLabel1.AnchorPoint = Vector2.new(0.5, 0)
     TextLabel1.Parent = Top
 
     Close.Font = Enum.Font.SourceSans
