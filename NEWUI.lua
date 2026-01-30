@@ -484,7 +484,7 @@ function ZuperMing:Window(GuiConfig)
     GuiConfig.Color        = GuiConfig.Color or Color3.fromRGB(100, 180, 255) -- Biru muda untuk ZuperMing
     GuiConfig["Tab Width"] = GuiConfig["Tab Width"] or 120
     GuiConfig.Version      = GuiConfig.Version or 1
-    GuiConfig.Icon         = GuiConfig.Icon or "rbxassetid://80659354137631"
+    GuiConfig.Icon         = GuiConfig.Icon or "rbxassetid://137808493980662"
 
     CURRENT_VERSION        = GuiConfig.Version
     -- LoadConfigFromFile()
@@ -552,9 +552,9 @@ function ZuperMing:Window(GuiConfig)
     DropShadow.Name = "DropShadow"
     DropShadow.Parent = DropShadowHolder
 
-    -- Background dihapus, pakai warna solid - ZuperMing Style
-    Main.BackgroundColor3 = Color3.fromRGB(25, 25, 30) -- Gelap dengan hint biru
-    Main.BackgroundTransparency = 0.05
+    -- Background dengan gradient biru muda → merah gelap - ZuperMing Style
+    Main.BackgroundColor3 = Color3.fromRGB(25, 30, 40) -- Base gelap
+    Main.BackgroundTransparency = 0.02
 
     Main.AnchorPoint = Vector2.new(0.5, 0.5)
     Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -564,9 +564,22 @@ function ZuperMing:Window(GuiConfig)
     Main.Name = "Main"
     Main.Parent = DropShadow
 
+    -- Gradient biru muda → merah gelap (dengan transparansi untuk blend)
+    local MainGradient = Instance.new("UIGradient")
+    MainGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 120, 200)),   -- Biru muda gelap
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(140, 40, 70))     -- Merah gelap
+    })
+    MainGradient.Rotation = 135 -- Diagonal smooth
+    MainGradient.Transparency = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 0.3),  -- Agak transparan di awal
+        NumberSequenceKeypoint.new(1, 0.4)   -- Agak transparan di akhir
+    })
+    MainGradient.Parent = Main
+
     MainStroke.Thickness = 1.2
-    MainStroke.Color = Color3.fromRGB(189, 162, 241)
-    MainStroke.Transparency = 0.6
+    MainStroke.Color = Color3.fromRGB(100, 180, 255)  -- Outline biru muda
+    MainStroke.Transparency = 0.5
     MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     MainStroke.Parent = Main
 
@@ -930,7 +943,7 @@ function ZuperMing:Window(GuiConfig)
         MainButton.Size = UDim2.new(0, 40, 0, 40)
         MainButton.Position = UDim2.new(0, 20, 0, 100)
         MainButton.BackgroundTransparency = 1
-        MainButton.Image = "rbxassetid://" .. (GuiConfig.Image or "80659354137631")
+        MainButton.Image = "rbxassetid://" .. (GuiConfig.Image or "137808493980662")
         MainButton.ScaleType = Enum.ScaleType.Fit
 
         local UICorner = Instance.new("UICorner")
@@ -1262,6 +1275,7 @@ function ZuperMing:Window(GuiConfig)
         local CountSection = 0
         function Sections:AddSection(Title, AlwaysOpen)
             local Title = Title or "Title"
+            AlwaysOpen = (AlwaysOpen == nil) and true or AlwaysOpen -- Default true jika nil
             local Section = Instance.new("Frame");
             local SectionDecideFrame = Instance.new("Frame");
             local UICorner1 = Instance.new("UICorner");
@@ -1290,7 +1304,7 @@ function ZuperMing:Window(GuiConfig)
             SectionOutline.Color = Color3.fromRGB(189, 162, 241) 
             SectionOutline.Thickness = 1.5
             SectionOutline.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-            SectionOutline.Transparency = 0.2 
+            SectionOutline.Transparency = 1 -- Dihapus (fully transparent) 
 
             SectionReal.AnchorPoint = Vector2.new(0.5, 0)
             SectionReal.BackgroundColor3 = Color3.fromRGB(30, 30, 35) 
