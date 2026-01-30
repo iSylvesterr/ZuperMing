@@ -479,8 +479,8 @@ end
 
 function ZuperMing:Window(GuiConfig)
     GuiConfig              = GuiConfig or {}
-    GuiConfig.Title        = GuiConfig.Title or "ZuperMing"
-    GuiConfig.Footer       = GuiConfig.Footer or "ZuperMing >:D"
+    GuiConfig.Title        = GuiConfig.Title or "ZuperMing Premium"
+    GuiConfig.Footer       = GuiConfig.Footer or "Version 1.37"
     GuiConfig.Color        = GuiConfig.Color or Color3.fromRGB(100, 180, 255) -- Biru muda untuk ZuperMing
     GuiConfig["Tab Width"] = GuiConfig["Tab Width"] or 120
     GuiConfig.Version      = GuiConfig.Version or 1
