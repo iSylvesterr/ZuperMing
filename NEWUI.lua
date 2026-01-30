@@ -556,7 +556,8 @@ function ZuperMing:Window(GuiConfig)
     Main:Destroy()
     Main = Instance.new("ImageLabel")
     Main.Image = "rbxassetid://104396282819940" -- FIXED: New image
-    Main.ScaleType = Enum.ScaleType.Fit  -- FIXED: Fit instead of Crop (biar gak zoom banget)
+    Main.ScaleType = Enum.ScaleType.Fit
+    Main.ImageRectOffset = Vector2.new(150, 0)  -- IMPROVED: Geser image ke kanan 150px
     Main.BackgroundTransparency = 0.1  -- IMPROVED: Window sedikit transparent (0.1 = 10% transparent)
     Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)  -- FIXED: Dark background
     Main.ImageTransparency = 0.7 -- FIXED: Image transparent tapi window solid
@@ -569,9 +570,9 @@ function ZuperMing:Window(GuiConfig)
     Main.Name = "Main"
     Main.Parent = DropShadow
 
-    MainStroke.Thickness = 3  -- FIXED: Lebih tebal (was 1.5)
-    MainStroke.Color = Color3.fromRGB(255, 50, 100)  -- FIXED: Merah neon terang!
-    MainStroke.Transparency = 0  -- FIXED: Fully visible (was 0.4)
+    MainStroke.Thickness = 3
+    MainStroke.Color = Color3.fromRGB(180, 10, 30)  -- IMPROVED: Merah pekat bukan pink!
+    MainStroke.Transparency = 0
     MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     MainStroke.Parent = Main
     
@@ -719,6 +720,19 @@ function ZuperMing:Window(GuiConfig)
 
     UICorner2.CornerRadius = UDim.new(0, 2)
     UICorner2.Parent = LayersTab
+    
+    -- IMPROVED: Garis pemisah vertikal antara tab dan section
+    local TabSeparator = Instance.new("Frame")
+    TabSeparator.Name = "TabSeparator"
+    TabSeparator.Parent = Main
+    TabSeparator.BackgroundColor3 = Color3.fromRGB(180, 10, 30)  -- Merah pekat seperti outline
+    TabSeparator.BorderSizePixel = 0
+    TabSeparator.Position = UDim2.new(0, GuiConfig["Tab Width"] + 9, 0, 50)  -- Di sebelah kanan tab
+    TabSeparator.Size = UDim2.new(0, 2, 1, -59)  -- Line vertikal 2px, full height
+    TabSeparator.ZIndex = 5
+    local SeparatorCorner = Instance.new("UICorner")
+    SeparatorCorner.CornerRadius = UDim.new(0, 1)
+    SeparatorCorner.Parent = TabSeparator
 
     DecideFrame.AnchorPoint = Vector2.new(0.5, 0)
     DecideFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -730,8 +744,8 @@ function ZuperMing:Window(GuiConfig)
     DecideFrame.Name = "DecideFrame"
     DecideFrame.Parent = Main
 
-    Layers.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Layers.BackgroundTransparency = 0.9990000128746033
+    Layers.BackgroundColor3 = Color3.fromRGB(10, 10, 15)  -- IMPROVED: Dark background
+    Layers.BackgroundTransparency = 0.15  -- IMPROVED: Semi-transparent agar konten terlihat jelas
     Layers.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Layers.BorderSizePixel = 0
     Layers.Position = UDim2.new(0, GuiConfig["Tab Width"] + 18, 0, 50)
