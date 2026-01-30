@@ -732,7 +732,16 @@ function ZuperMing:Window(GuiConfig)
     TabSeparator.ZIndex = 5
     -- REMOVED: Corner dihapus agar garis lurus sempurna
 
-    -- REMOVED: DecideFrame dihapus karena outline hitam jelek
+    -- IMPROVED: DecideFrame sebagai garis horizontal MERAH di bawah title
+    DecideFrame.AnchorPoint = Vector2.new(0.5, 0)
+    DecideFrame.BackgroundColor3 = Color3.fromRGB(180, 10, 30)  -- IMPROVED: Merah pekat!
+    DecideFrame.BackgroundTransparency = 0  -- IMPROVED: Fully visible
+    DecideFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    DecideFrame.BorderSizePixel = 0
+    DecideFrame.Position = UDim2.new(0.5, 0, 0, 38)
+    DecideFrame.Size = UDim2.new(1, 0, 0, 2)  -- IMPROVED: 2px thickness
+    DecideFrame.Name = "DecideFrame"
+    DecideFrame.Parent = Main
 
     Layers.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
     Layers.BackgroundTransparency = 0.7  -- IMPROVED: Lebih transparan agar image terlihat (was 0.15)
@@ -1232,14 +1241,14 @@ function ZuperMing:Window(GuiConfig)
         local UIStroke2 = Instance.new("UIStroke");
         local UICorner4 = Instance.new("UICorner");
 
-        Tab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Tab.BackgroundColor3 = Color3.fromRGB(20, 20, 25)  -- IMPROVED: Dark background
         if CountTab == 0 then
-            Tab.BackgroundTransparency = 0.9200000166893005
+            Tab.BackgroundTransparency = 0.85  -- IMPROVED: Semi-transparent untuk selected tab
         else
-            Tab.BackgroundTransparency = 0.9990000128746033
+            Tab.BackgroundTransparency = 0.95  -- IMPROVED: Lebih transparan untuk non-selected
         end
         Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
-        Tab.BorderSizePixel = 0
+        Tab.BorderSizePixel = 0  -- IMPORTANT: No border!
         Tab.LayoutOrder = CountTab
         Tab.Size = UDim2.new(1, 0, 0, 30)
         Tab.Name = "Tab"
