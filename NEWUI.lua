@@ -484,7 +484,7 @@ function ZuperMing:Window(GuiConfig)
     GuiConfig.Color        = GuiConfig.Color or Color3.fromRGB(100, 180, 255) -- Biru muda untuk ZuperMing
     GuiConfig["Tab Width"] = GuiConfig["Tab Width"] or 120
     GuiConfig.Version      = GuiConfig.Version or 1
-    GuiConfig.Icon         = GuiConfig.Icon or "rbxassetid://137808493980662"
+    GuiConfig.Icon         = GuiConfig.Icon or "rbxassetid://84078385121142"  -- FIXED: New logo
 
     CURRENT_VERSION        = GuiConfig.Version
     -- LoadConfigFromFile()
@@ -555,8 +555,8 @@ function ZuperMing:Window(GuiConfig)
     -- Background pakai IMAGE logo ZuperMing
     Main:Destroy()
     Main = Instance.new("ImageLabel")
-    Main.Image = "rbxassetid://137808493980662" -- Logo ZuperMing
-    Main.ScaleType = Enum.ScaleType.Crop
+    Main.Image = "rbxassetid://84078385121142" -- FIXED: New logo
+    Main.ScaleType = Enum.ScaleType.Fit  -- FIXED: Fit instead of Crop (biar gak zoom banget)
     Main.BackgroundTransparency = 1
     Main.ImageTransparency = 0.65 -- FIXED: Lebih gelap biar fitur keliatan (was 0.15)
 
@@ -568,9 +568,9 @@ function ZuperMing:Window(GuiConfig)
     Main.Name = "Main"
     Main.Parent = DropShadow
 
-    MainStroke.Thickness = 1.5
-    MainStroke.Color = Color3.fromRGB(140, 40, 70)  -- Outline merah gelap (biar keliatan!)
-    MainStroke.Transparency = 0.4
+    MainStroke.Thickness = 3  -- FIXED: Lebih tebal (was 1.5)
+    MainStroke.Color = Color3.fromRGB(255, 50, 100)  -- FIXED: Merah neon terang!
+    MainStroke.Transparency = 0  -- FIXED: Fully visible (was 0.4)
     MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     MainStroke.Parent = Main
     
@@ -596,35 +596,18 @@ function ZuperMing:Window(GuiConfig)
 
     TitleIcon:Destroy() -- Hapus icon lama
     
-    -- Buat 3 titik warna kayak macOS (🔴🟡🟢)
-    local DotsFrame = Instance.new("Frame")
-    DotsFrame.Name = "DotsFrame"
-    DotsFrame.Parent = Top
-    DotsFrame.BackgroundTransparency = 1
-    DotsFrame.Position = UDim2.new(0, 10, 0.5, 0)
-    DotsFrame.AnchorPoint = Vector2.new(0, 0.5)
-    DotsFrame.Size = UDim2.new(0, 50, 0, 12)
-    
-    local dotColors = {
-        Color3.fromRGB(255, 95, 87),   -- Merah
-        Color3.fromRGB(255, 189, 68),  -- Kuning
-        Color3.fromRGB(40, 201, 64)    -- Ijo
-    }
-    
-    for i = 1, 3 do
-        local Dot = Instance.new("Frame")
-        Dot.Name = "Dot" .. i
-        Dot.Parent = DotsFrame
-        Dot.BackgroundColor3 = dotColors[i]
-        Dot.BorderSizePixel = 0
-        Dot.Position = UDim2.new(0, (i-1) * 16, 0.5, 0)
-        Dot.AnchorPoint = Vector2.new(0, 0.5)
-        Dot.Size = UDim2.new(0, 12, 0, 12)
-        
-        local Corner = Instance.new("UICorner")
-        Corner.CornerRadius = UDim.new(1, 0) -- Bulat sempurna
-        Corner.Parent = Dot
-    end
+    -- FIXED: Replace Mac OS dots with logo
+    local LogoIcon = Instance.new("ImageLabel")
+    LogoIcon.Name = "LogoIcon"
+    LogoIcon.Parent = Top
+    LogoIcon.BackgroundTransparency = 1
+    LogoIcon.Position = UDim2.new(0, 10, 0.5, 0)
+    LogoIcon.AnchorPoint = Vector2.new(0, 0.5)
+    LogoIcon.Size = UDim2.new(0, 24, 0, 24)
+    LogoIcon.Image = "rbxassetid://84078385121142"  -- FIXED: New logo
+    LogoIcon.ScaleType = Enum.ScaleType.Fit
+    LogoIcon.ImageColor3 = GuiConfig.Color
+    LogoIcon.ZIndex = 10
 
     -- ThemeImage dihapus untuk ZuperMing - Background solid only
     -- ThemeImage.Name = "ThemeImage"
@@ -897,6 +880,39 @@ function ZuperMing:Window(GuiConfig)
             Thickness = 2
         }):Play()
     end)
+    
+    -- FIXED: Make minimize icon draggable
+    local dragging = false
+    local dragStart = nil
+    local startPos = nil
+    
+    MinimizeIcon.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = MinimizeIcon.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+            local delta = input.Position - dragStart
+            local newPos = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+            MinimizeIcon.Position = newPos
+        end
+    end)
+    
     Close.Activated:Connect(function()
         CircleClick(Close, Mouse.X, Mouse.Y)
 
