@@ -554,14 +554,9 @@ function ZuperMing:Window(GuiConfig)
 
     -- Background pakai IMAGE logo ZuperMing
     Main:Destroy()
-    Main = Instance.new("ImageLabel")
-    Main.Image = "rbxassetid://104396282819940" -- FIXED: New image
-    Main.ScaleType = Enum.ScaleType.Fit
-    Main.ImageRectOffset = Vector2.new(150, 0)  -- IMPROVED: Geser image ke kanan 150px
-    Main.BackgroundTransparency = 0.1  -- IMPROVED: Window sedikit transparent (0.1 = 10% transparent)
-    Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)  -- FIXED: Dark background
-    Main.ImageTransparency = 0.7 -- FIXED: Image transparent tapi window solid
-
+    Main = Instance.new("Frame")  -- IMPROVED: Pakai Frame dulu sebagai container
+    Main.BackgroundTransparency = 0.1
+    Main.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
     Main.AnchorPoint = Vector2.new(0.5, 0.5)
     Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Main.BorderSizePixel = 0
@@ -569,6 +564,18 @@ function ZuperMing:Window(GuiConfig)
     Main.Size = UDim2.new(1, -47, 1, -47)
     Main.Name = "Main"
     Main.Parent = DropShadow
+    
+    -- IMPROVED: Background image as child, digeser ke kanan
+    local BackgroundImage = Instance.new("ImageLabel")
+    BackgroundImage.Name = "BackgroundImage"
+    BackgroundImage.Parent = Main
+    BackgroundImage.Image = "rbxassetid://104396282819940"
+    BackgroundImage.ScaleType = Enum.ScaleType.Fit
+    BackgroundImage.BackgroundTransparency = 1
+    BackgroundImage.ImageTransparency = 0.7
+    BackgroundImage.Position = UDim2.new(0, 100, 0, 0)  -- Geser 100px ke kanan
+    BackgroundImage.Size = UDim2.new(1, -100, 1, 0)  -- Ambil sisa width
+    BackgroundImage.ZIndex = 0
 
     MainStroke.Thickness = 3
     MainStroke.Color = Color3.fromRGB(180, 10, 30)  -- IMPROVED: Merah pekat bukan pink!
@@ -1255,21 +1262,21 @@ function ZuperMing:Window(GuiConfig)
         Tab.Name = "Tab"
         Tab.Parent = ScrollTab
         
-        -- Border gradient untuk Tab
+        -- IMPROVED: Border gradient untuk Tab - Gradasi merah dan biru
         local TabBorderStroke = Instance.new("UIStroke")
         TabBorderStroke.Name = "TabBorder"
-        TabBorderStroke.Thickness = 1.2
-        TabBorderStroke.Transparency = 0.7
+        TabBorderStroke.Thickness = 1.5  -- IMPROVED: Lebih tebal
+        TabBorderStroke.Transparency = 0.3  -- IMPROVED: Lebih terlihat (was 0.7)
         TabBorderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
         TabBorderStroke.Parent = Tab
         
-        -- Gradient biru muda → merah gelap untuk border
+        -- IMPROVED: Gradient merah pekat → biru terang untuk border
         local TabBorderGradient = Instance.new("UIGradient")
         TabBorderGradient.Color = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 180, 255)),  -- Biru muda
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 50, 80))     -- Merah gelap
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(180, 10, 30)),   -- Merah pekat
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 180, 255))  -- Biru terang
         })
-        TabBorderGradient.Rotation = 0 -- Horizontal gradient
+        TabBorderGradient.Rotation = 90  -- IMPROVED: Vertical gradient (atas ke bawah)
         TabBorderGradient.Parent = TabBorderStroke
 
         UICorner3.CornerRadius = UDim.new(0, 4)
